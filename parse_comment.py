@@ -18,7 +18,11 @@ def main():
         print("\nParsed YAML Data:")
         print(parsed_data)
     else:
+        # If no front matter, assume the entire comment body is YAML content
+        parsed_data = yaml.safe_load(comment_body.strip())
         print("No YAML Front Matter found in the comment body.")
+        print("\nParsed YAML Data:")
+        print(parsed_data)
 
 if __name__ == "__main__":
     main()
