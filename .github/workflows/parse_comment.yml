@@ -13,6 +13,7 @@ jobs:
       - name: Set up environment variables
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -24,5 +25,3 @@ jobs:
 
       - name: Parse Comment
         run: python3 parse_comment.py "${{ github.event.comment.body }}"
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
