@@ -6,6 +6,7 @@ on:
 
 jobs:
   parse_comment:
+    if: github.event.issue.title == 'Access Requests' && github.event_name == 'issue_comment'  
     runs-on: ubuntu-latest
 
     steps:
