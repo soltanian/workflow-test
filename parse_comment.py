@@ -35,6 +35,12 @@ def main():
     run(["git", "config", "--global", "user.name", "Abbas Automation"])
     run(["git", "add", file_path])
     run(["git", "commit", "-m", f"Add {project_name} configuration file"])
+    
+    # Use the PAT as the authentication token
+    pat = os.getenv("ACCESS_TOKEN")
+    if not pat:
+        print("ACCESS_TOKEN secret not found. Exiting...")
+        return
     run(["git", "push", "origin", "main"])
 
 if __name__ == "__main__":
