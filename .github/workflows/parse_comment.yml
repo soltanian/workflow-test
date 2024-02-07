@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up environment variables
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -22,4 +25,4 @@ jobs:
       - name: Parse Comment
         run: python3 parse_comment.py "${{ github.event.comment.body }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
