@@ -6,12 +6,19 @@ on:
 
 jobs:
   parse_comment:
-    if: github.event.issue.title == 'Access Requests' && github.event_name == 'issue_comment'  
+    if: github.event.issue.title == 'Access Requests' && github.event_name == 'issue_comment'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.issue.head.sha }}
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
       - name: Install dependencies
         run: |
