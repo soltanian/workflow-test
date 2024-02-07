@@ -41,7 +41,7 @@ def main():
     if not pat:
         print("ACCESS_TOKEN secret not found. Exiting...")
         return
-    run(["git", "push", "origin", "main"])
+    run(["git", "push", "origin", "main"], env={"GITHUB_TOKEN": pat})
 
 if __name__ == "__main__":
     main()
