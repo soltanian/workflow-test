@@ -38,10 +38,7 @@ def main():
     # Git commands to create a new branch, add, commit, and push the file
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
-    run(["git", "checkout", "main"])
-    run(["git", "pull", "origin", "main"])
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-    run(["git", "merge", "main"])
 
     # Pull changes from the remote branch
     run(["git", "pull", "--rebase", "origin", branch_name])
@@ -50,14 +47,8 @@ def main():
     run(["git", "pull", "--rebase", "origin", "main"])
 
     # Check if there are any conflicts
-    result = run(["git", "status", "--porcelain"], stdout=PIPE)
-    if b"both modified" in result.stdout:
-        # Resolve conflicts
-        run(["git", "diff", "--name-only", "--diff-filter=U"])
-        run(["git", "diff", "--name-only", "--diff-filter=U", "|", "xargs", "git", "checkout", "--ours"])
-        run(["git", "diff", "--name-only", "--diff-filter=U", "|", "xargs", "git", "checkout", "--theirs"])
-        run(["git", "add", "."])
-        run(["git", "rebase", "--continue"])
+    run(["git", "add", "."])
+    run(["git", "rebase", "--continue"])
 
 
     # Generate file path and name
