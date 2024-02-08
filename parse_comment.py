@@ -44,7 +44,10 @@ def main():
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-    run(["git", "pull"])  # Make sure to pull changes made on this branch if it already exist
+
+    # Pull changes from the remote branch
+    run(["git", "pull", "origin", branch_name])
+    
     run(["git", "add", file_path])
     run(["git", "commit", "-m", f"Add {project_name} configuration file"])
 
