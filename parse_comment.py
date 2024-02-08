@@ -39,18 +39,14 @@ def main():
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-
-    
-    # Pull changes from the remote branch
-    run(["git", "pull", "--rebase", "origin", branch_name])
-
-    # Pull changes from the remote branch
-    run(["git", "pull", "--rebase", "origin", "main"])
+    run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
-    run(["git", "add", "."])
-    run(["git", "rebase", "--continue"])
-
+    conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    if conflict_check.stdout:
+        print("There are conflicts that need to be resolved before proceeding. Exiting...")
+        return
+        
 
     # Generate file path and name
     file_path = os.path.join(config_dir, f"{project_name}.yaml")
