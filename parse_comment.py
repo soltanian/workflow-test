@@ -1,3 +1,9 @@
+import sys
+import yaml
+import re
+import os
+from subprocess import run
+
 def main():
     comment_body = sys.argv[1]
 
