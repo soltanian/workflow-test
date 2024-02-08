@@ -28,7 +28,18 @@ def main():
     # Create branch name from Jira ticket number and project name
     branch_name = f"{jira_ticket_number}-{project_name.replace(' ', '-')}"
 
+    # Create configurations directory if it doesn't exist
+    config_dir = 'configurations'
+    os.makedirs(config_dir, exist_ok=True)
 
+    # Generate file path and name
+    file_path = os.path.join(config_dir, f"{project_name}.yaml")
+
+    # Write parsed data to YAML file
+    with open(file_path, 'w') as file:
+        yaml.dump(parsed_data, file)
+
+    
     # Git commands to create a new branch, add, commit, and push the file
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
