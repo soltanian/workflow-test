@@ -69,7 +69,7 @@ def main():
 
     # Create a pull request
     #run(["gh", "pr", "create", "--base", "main", "--head", branch_name, "--title", f"Add {project_name} configuration file - Jira: {jira_ticket_number}"], env={"GITHUB_TOKEN": os.getenv("GITHUB_TOKEN")})
-    run(["gh", "pr", "create", "--base", "main", "--head", branch_name, "--title", f"Add {project_name} configuration file - Jira: {jira_ticket_number}"])
+    run(["gh", "pr", "create", "--base", "main", "--head", branch_name, "--title", f"Add {project_name} configuration file - Jira: {jira_ticket_number}", "--body", f"request for jira ticket {jira_ticket_number}"])
 
 if __name__ == "__main__":
     main()
