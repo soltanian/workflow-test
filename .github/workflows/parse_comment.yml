@@ -13,7 +13,8 @@ jobs:
       - name: Set up environment variables
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: echo "env var set"
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provide GitHub token for GitHub CLI authentication
+        run: echo "env vars are set"
 
       - name: Checkout repository
         uses: actions/checkout@v2
