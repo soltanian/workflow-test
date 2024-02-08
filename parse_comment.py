@@ -38,7 +38,7 @@ def main():
     # Git commands to create a new branch, add, commit, and push the file
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
-    run(["git", "checkout", "origin", "main"])
+    run(["git", "checkout", "main"])
     run(["git", "pull"])
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     print("Checkedout from main and created a branch or switch to the existing one")
