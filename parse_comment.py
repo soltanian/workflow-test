@@ -32,21 +32,26 @@ def main():
     config_dir = 'configurations'
     os.makedirs(config_dir, exist_ok=True)
 
+    
+
+    
+    # Git commands to create a new branch, add, commit, and push the file
+    run(["git", "config", "--global", "user.email", "automation@gmail.com"])
+    run(["git", "config", "--global", "user.name", "Automation"])
+    #run(["git", "checkout", "main"])
+    #run(["git", "pull", "origin", "main"])
+    run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
+    #run(["git", "merge", "main"])
+
+    # Pull changes from the remote branch
+    run(["git", "pull", "--rebase", "origin", branch_name])
+
     # Generate file path and name
     file_path = os.path.join(config_dir, f"{project_name}.yaml")
 
     # Write parsed data to YAML file
     with open(file_path, 'w') as file:
         yaml.dump(parsed_data, file)
-
-    
-    # Git commands to create a new branch, add, commit, and push the file
-    run(["git", "config", "--global", "user.email", "automation@gmail.com"])
-    run(["git", "config", "--global", "user.name", "Automation"])
-    run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-
-    # Pull changes from the remote branch
-    run(["git", "pull", "--rebase", "origin", branch_name])
     
     run(["git", "add", file_path])
     run(["git", "commit", "-m", f"Add {project_name} configuration file"])
