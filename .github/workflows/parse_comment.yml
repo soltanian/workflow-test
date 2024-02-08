@@ -28,5 +28,6 @@ jobs:
       - name: Parse Comment
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: python3 parse_comment.py "${{ github.event.comment.body }}"
         
