@@ -46,7 +46,7 @@ def main():
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
 
     # Pull changes from the remote branch
-    run(["git", "pull", "origin", branch_name])
+    run(["git", "pull", "--rebase", "origin", branch_name])
     
     run(["git", "add", file_path])
     run(["git", "commit", "-m", f"Add {project_name} configuration file"])
