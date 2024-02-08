@@ -2,7 +2,7 @@ import sys
 import yaml
 import re
 import os
-from subprocess import run
+from subprocess import run, PIPE
 
 def main():
     comment_body = sys.argv[1]
@@ -38,6 +38,8 @@ def main():
     # Git commands to create a new branch, add, commit, and push the file
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
+    # Enable pull rebase globally
+    run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
     run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
