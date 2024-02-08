@@ -46,6 +46,20 @@ def main():
     # Pull changes from the remote branch
     run(["git", "pull", "--rebase", "origin", branch_name])
 
+    # Pull changes from the remote branch
+    run(["git", "pull", "--rebase", "origin", "main"])
+
+    # Check if there are any conflicts
+    result = run(["git", "status", "--porcelain"], stdout=PIPE)
+    if b"both modified" in result.stdout:
+        # Resolve conflicts
+        run(["git", "diff", "--name-only", "--diff-filter=U"])
+        run(["git", "diff", "--name-only", "--diff-filter=U", "|", "xargs", "git", "checkout", "--ours"])
+        run(["git", "diff", "--name-only", "--diff-filter=U", "|", "xargs", "git", "checkout", "--theirs"])
+        run(["git", "add", "."])
+        run(["git", "rebase", "--continue"])
+
+
     # Generate file path and name
     file_path = os.path.join(config_dir, f"{project_name}.yaml")
 
