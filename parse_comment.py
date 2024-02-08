@@ -15,7 +15,7 @@ def main():
 
     # Extract project name and Jira ticket number
     project_name = parsed_data.get('project_name', '').replace(' ', '-')  # Replace spaces with hyphens
-    jira_ticket_number = parsed_data.get('jira_ticket_number', '')
+    jira_ticket_number = parsed_data.get('Jira_ticket_number', '')
 
     if not project_name:
         print("Project name not found in comment. Exiting...")
