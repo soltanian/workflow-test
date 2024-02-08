@@ -38,10 +38,10 @@ def main():
     # Git commands to create a new branch, add, commit, and push the file
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
-    #run(["git", "checkout", "main"])
-    #run(["git", "pull", "origin", "main"])
+    run(["git", "checkout", "main"])
+    run(["git", "pull", "origin", "main"])
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-    #run(["git", "merge", "main"])
+    run(["git", "merge", "main"])
 
     # Pull changes from the remote branch
     run(["git", "pull", "--rebase", "origin", branch_name])
