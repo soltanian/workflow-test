@@ -31,8 +31,8 @@ def main():
         yaml.dump(parsed_data, file)
 
     # Git commands to add, commit, and push the file
-    run(["git", "config", "--global", "user.email", "no-registered-email@gmail.com"])
-    run(["git", "config", "--global", "user.name", "Automation"])
+    #run(["git", "config", "--global", "user.email", "no-registered-email@gmail.com"])
+    #run(["git", "config", "--global", "user.name", "Automation"])
     run(["git", "add", file_path])
     run(["git", "commit", "-m", f"Add {project_name} configuration file"])
     
