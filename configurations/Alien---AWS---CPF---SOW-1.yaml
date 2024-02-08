@@ -3,7 +3,7 @@ Requester: Abbas Soltanian
 Requester_email: abbas.soltanian@opsguru.io
 customer_name: Alien
 groups:
-- customer_account_id: '1111111111'
+- customer_account_id: '111111111100'
   group_description: Group created by terraform to provide READONLY access to Dev
     environment of the customer Alien
   group_name: Readonly-Dev
@@ -11,7 +11,7 @@ groups:
   - employee1@opsguru.io
   - employee2@opsguru.io
   - employee3@opsguru.io
-- customer_account_id: '222222222'
+- customer_account_id: '22222222200'
   group_description: Group created by terraform to provide READONLY access to Prod
     environment of the customer Alien
   group_name: Readonly-Prod
