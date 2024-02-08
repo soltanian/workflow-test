@@ -39,6 +39,7 @@ def main():
     run(["git", "config", "--global", "user.email", "automation@gmail.com"])
     run(["git", "config", "--global", "user.name", "Automation"])
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
+    run(["git", "pull"])  # pull changes if branch exist
     run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
