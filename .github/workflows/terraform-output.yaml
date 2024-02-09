@@ -7,14 +7,66 @@ jobs:
   generate_output:
     runs-on: ubuntu-latest
     steps: 
-      - name: generate Terraform output
+      - name: generate Terraform output json format
         run: |
-          terraform_output_json = $(<.github/workflows/output_file.txt)
+          echo '{
+            "customer_assume_role_names": {
+              "sensitive": false,
+              "type": [
+                "object",
+                {
+                  "admins": [
+                    "object",
+                    {
+                      "AWS_Account_ID": "string",
+                      "Principal": "string",
+                      "role_name": "string"
+                    }
+                  ],
+                  "readonly": [
+                    "object",
+                    {
+                      "AWS_Account_ID": "string",
+                      "Principal": "string",
+                      "role_name": "string"
+                    }
+                  ]
+                }
+              ],
+              "value": {
+                "admins": {
+                  "AWS_Account_ID": "891377079859",
+                  "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_9fb927072f7f0f56",
+                  "role_name": "Opsguru-Account-Access-Admins-Dev"
+                },
+                "readonly": {
+                  "AWS_Account_ID": "891377079859",
+                  "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_b87e2a86e56cf081",
+                  "role_name": "Opsguru-Account-Access-Readonly-Dev"
+                }
+              }
+            },
+            "og_employees_aws_configs": {
+              "sensitive": false,
+              "type": [
+                "tuple",
+                [
+                  "string",
+                  "string"
+                ]
+              ],
+              "value": [
+                "[profile Abbas-Admins-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev\ncolor = 91518c\n",
+                "[profile Abbas-Readonly-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev\ncolor = cc66ba\n"
+              ]
+            }
+          }' > terraform_output.txt
           
       - name: Create JSON Object
         id: create_json
         run: |
           jira_ticket="AIP-43"
+          terraform_output_json=$(<terraform_output.txt)
          
           # Create JSON object
           json_object="{ \"jira_ticket\": \"$jira_ticket\", \"terraform_output\": \"$terraform_output_json\" }"
