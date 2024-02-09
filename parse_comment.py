@@ -57,8 +57,8 @@ def main():
         print(f"Creating and switching to branch '{branch_name}'...")
         run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     
-    run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
-
+    run(["git", "pull", "--rebase", "--autostash", "origin", "main"])  # Pull changes from the remote main branch
+    
     # Check if there are any conflicts
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
     if conflict_check.stdout:
