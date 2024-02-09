@@ -39,7 +39,11 @@ jobs:
           # Print JSON object
           echo "$json_object" > output.json
 
- 
+      - name: Output Text
+        run: |
+          cat output.json
+
+          
       - name: Send Output to Zapier
         if: always()
         run: |
