@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Set up environment variables
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          #ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provide GitHub token for GitHub CLI authentication
         run: echo "env vars are set"
 
@@ -27,7 +27,7 @@ jobs:
 
       - name: Parse Comment
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          #ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: python3 parse_comment.py "${{ github.event.comment.body }}"
         
