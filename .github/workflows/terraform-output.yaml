@@ -7,48 +7,47 @@ jobs:
   generate_output:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate Terraform Output
+        run: |
+          echo 'customer_assume_role_names = {' > terraform_output.txt
+          echo '  "admins" = {' >> terraform_output.txt
+          echo '    "AWS_Account_ID" = "891377079859"' >> terraform_output.txt
+          echo '    "Principal" = "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_9fb927072f7f0f56"' >> terraform_output.txt
+          echo '    "role_name" = "Opsguru-Account-Access-Admins-Dev"' >> terraform_output.txt
+          echo '  }' >> terraform_output.txt
+          echo '  "readonly" = {' >> terraform_output.txt
+          echo '    "AWS_Account_ID" = "891377079859"' >> terraform_output.txt
+          echo '    "Principal" = "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_b87e2a86e56cf081"' >> terraform_output.txt
+          echo '    "role_name" = "Opsguru-Account-Access-Readonly-Dev"' >> terraform_output.txt
+          echo '  }' >> terraform_output.txt
+          echo '}' >> terraform_output.txt
+          echo 'og_employees_aws_configs = [' >> terraform_output.txt
+          echo '  <<-EOT' >> terraform_output.txt
+          echo '  [profile Abbas-Admins-Dev]' >> terraform_output.txt
+          echo '  role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev' >> terraform_output.txt
+          echo '  color = 91518c' >> terraform_output.txt
+          echo '  ' >> terraform_output.txt
+          echo '  EOT,' >> terraform_output.txt
+          echo '  <<-EOT' >> terraform_output.txt
+          echo '  [profile Abbas-Readonly-Dev]' >> terraform_output.txt
+          echo '  role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev' >> terraform_output.txt
+          echo '  color = cc66ba' >> terraform_output.txt
+          echo '  ' >> terraform_output.txt
+          echo '  EOT,' >> terraform_output.txt
+          
       - name: Create JSON Object
         id: create_json
         run: |
           jira_ticket="AIP-43"
-          terraform_output='{
-            "customer_assume_role_names": {
-              "admins": {
-                "AWS_Account_ID": "891377079859",
-                "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_9fb927072f7f0f56",
-                "role_name": "Opsguru-Account-Access-Admins-Dev"
-              },
-              "readonly": {
-                "AWS_Account_ID": "891377079859",
-                "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_b87e2a86e56cf081",
-                "role_name": "Opsguru-Account-Access-Readonly-Dev"
-              }
-            },
-            "og_employees_aws_configs": [
-              "[[profile Abbas-Admins-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev\ncolor = 91518c\n]",
-              "[[profile Abbas-Readonly-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev\ncolor = cc66ba\n]"
-            ]
-          }'
-
-          # Convert Terraform output into JSON string
-          terraform_output_json=$(echo "$terraform_output" | jq -c .)
+          terraform_output=$(<terraform_output.txt)
 
           # Create JSON object
-          json_object="{ \"jira_ticket\": \"$jira_ticket\", \"terraform_output\": $terraform_output_json }"
+          json_object="{ \"jira_ticket\": \"$jira_ticket\", \"terraform_output\": \"$terraform_output\" }"
 
           # Print JSON object
           echo "$json_object" > output.json
 
-  
-      - name: Output Text
-        id: output
-        run: |
-          echo '{
-            "jira_ticket": "AIP-42",
-            "terraform_output": "${{ steps.generate_output.outputs.terraform_output }}"
-          }
-          ' > output.json
-          
+ 
       - name: Send Output to Zapier
         if: always()
         run: |
