@@ -78,7 +78,7 @@ def main():
     # Push changes to the new branch
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
 
-    github_username = get_github_username_from_email(Reviewer_email)
+    github_username = get_github_username_from_email("abbas.soltanian@gmail.com")
     # Create a pull request
     pr_create_command = [
         "gh", "pr", "create",
