@@ -11,40 +11,30 @@ jobs:
         id: generate_output
         run: |
           # Generate the terraform_output value here
-          terraform_output="customer_assume_role_names = {
-                                  "admins" = {
-                                    "AWS_Account_ID" = "891377079859"
-                                    "Principal" = "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_9fb927072f7f0f56"
-                                    "role_name" = "Opsguru-Account-Access-Admins-Dev"
-                                  }
-                                  "readonly" = {
-                                    "AWS_Account_ID" = "891377079859"
-                                    "Principal" = "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_b87e2a86e56cf081"
-                                    "role_name" = "Opsguru-Account-Access-Readonly-Dev"
-                                  }
-                                }
-                                og_employees_aws_configs = [
-                                  <<-EOT
-                                  [profile Abbas-Admins-Dev]
-                                  role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev
-                                  color = 91518c
-                                  
-                                  EOT,
-                                  <<-EOT
-                                  [profile Abbas-Readonly-Dev]
-                                  role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev
-                                  color = cc66ba
-                                  
-                                  EOT,
-                                ]"
-                                
-
-          # Set the terraform_output as a multi-line string
-          terraform_output_str="\"terraform_output\": |"
-          terraform_output_str+="\n$terraform_output"
-
-          # Set the output for later steps
-          echo "::set-output name=terraform_output::$terraform_output_str"
+          terraform_output=$(cat <<EOF
+            "customer_assume_role_names": {
+              "admins": {
+                "AWS_Account_ID": "891377079859",
+                "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_15a4728308405ce0",
+                "role_name": "Opsguru-Account-Access-Admins-Dev"
+              },
+              "readonly": {
+                "AWS_Account_ID": "891377079859",
+                "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_85c0bab2e80955b4",
+                "role_name": "Opsguru-Account-Access-Readonly-Dev"
+              }
+            }
+            "og_employees_aws_configs": [
+              [profile Abbas-Admins-Dev]
+              role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev
+              color = 91518c
+            
+              [profile Abbas-Readonly-Dev]
+              role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev
+              color = cc66ba
+            ]
+            EOF
+            )
 
   
       - name: Output Text
