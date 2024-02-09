@@ -55,6 +55,13 @@ jobs:
             "terraform_output": "${{ steps.generate_output.outputs.terraform_output }}"
           }
           ' > output.json
+      - name: Output Text to github
+        run: |
+          echo '{
+            "jira_ticket": "AIP-42",
+            "terraform_output": "${{ steps.generate_output.outputs.terraform_output }}"
+          }
+          '   
           
       - name: Send Output to Zapier
         if: always()
