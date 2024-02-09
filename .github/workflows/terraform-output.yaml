@@ -38,4 +38,8 @@ jobs:
       - name: Save Output
         run: echo ${{ steps.generate_output.outputs.value }} > output.txt
         id: save_output   
+      - name: Send Output to Zapier
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d "@output.txt" https://hooks.zapier.com/hooks/catch/17861705/3l8s0u7/
+  
           
