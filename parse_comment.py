@@ -58,12 +58,19 @@ def main():
         run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     
     run(["git", "pull", "--rebase", "--autostash", "origin", "main"])  # Pull changes from the remote main branch
-    
-    # Check if there are any conflicts
-    conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
-    if conflict_check.stdout:
-        print("There are conflicts that need to be resolved before proceeding. Exiting...")
-        return
+
+
+    # Pull changes from the remote main branch and handle conflicts
+    pull_result = run(["git", "pull", "--rebase", "origin", "main"], stdout=PIPE, stderr=PIPE)
+    if pull_result.returncode != 0:
+        print("Error occurred while pulling changes. Attempting to resolve conflicts...")
+        run(["git", "rebase", "--continue"])  # Continue rebase to resolve conflicts
+
+    ## Check if there are any conflicts
+    #conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    #if conflict_check.stdout:
+    #    print("There are conflicts that need to be resolved before proceeding. Exiting...")
+    #    return
         
 
     # Generate file path and name
