@@ -1,0 +1,37 @@
+name: Generate Text Output
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate_output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Text
+        run: |
+          echo 'customer_assume_role_names = {
+            "admins" = {
+              "AWS_Account_ID" = "891377079859"
+              "Principal" = "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_15a4728308405ce0"
+              "role_name" = "Opsguru-Account-Access-Admins-Dev"
+            }
+            "readonly" = {
+              "AWS_Account_ID" = "891377079859"
+              "Principal" = "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_85c0bab2e80955b4"
+              "role_name" = "Opsguru-Account-Access-Readonly-Dev"
+            }
+          }
+          og_employees_aws_configs = [
+            <<-EOT
+            [profile Abbas-Admins-Dev]
+            role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev
+            color = 91518c
+            
+            EOT,
+            <<-EOT
+            [profile Abbas-Readonly-Dev]
+            role_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev
+            color = cc66ba
+            
+            EOT,
+          ]'
