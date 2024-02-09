@@ -5,6 +5,7 @@ import os
 from subprocess import run, PIPE
 from github_utils import get_github_username_from_email
 
+
 def main():
     comment_body = sys.argv[1]
 
@@ -29,8 +30,6 @@ def main():
         print("Jira ticket number not found in comment. Exiting...")
         return
 
-    
-    
     # Create branch name from Jira ticket number and project name
     branch_name = f"{jira_ticket_number}-{project_name.replace(' ', '-')}"
 
@@ -46,31 +45,15 @@ def main():
     run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
-    
-    # Check if the branch already exists
-    branch_exists = run(["git", "show-ref", "--verify", f"refs/heads/{branch_name}"], capture_output=True, text=True).stdout.strip()
-    if branch_exists:
-        print(f"Branch '{branch_name}' already exists. Switching to it...")
-        run(["git", "checkout", branch_name])
-        run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
-    else:
-        print(f"Creating and switching to branch '{branch_name}'...")
-        run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-    
-    run(["git", "pull", "--rebase", "--autostash", "origin", "main"])  # Pull changes from the remote main branch
+    run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
+    run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
+    run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
-
-    # Pull changes from the remote main branch and handle conflicts
-    pull_result = run(["git", "pull", "--rebase", "origin", "main"], stdout=PIPE, stderr=PIPE)
-    if pull_result.returncode != 0:
-        print("Error occurred while pulling changes. Attempting to resolve conflicts...")
-        run(["git", "rebase", "--continue"])  # Continue rebase to resolve conflicts
-
-    ## Check if there are any conflicts
-    #conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
-    #if conflict_check.stdout:
-    #    print("There are conflicts that need to be resolved before proceeding. Exiting...")
-    #    return
+    # Check if there are any conflicts
+    conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    if conflict_check.stdout:
+        print("There are conflicts that need to be resolved before proceeding. Exiting...")
+        return
         
 
     # Generate file path and name
@@ -90,7 +73,6 @@ def main():
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
 
     github_username = get_github_username_from_email(Reviewer_email)
-
     # Create a pull request
     pr_create_command = [
         "gh", "pr", "create",
