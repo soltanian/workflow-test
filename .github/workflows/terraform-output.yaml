@@ -30,7 +30,7 @@ jobs:
             ]
           }'
 
-          sed -i 's/"/\\"/g' terraform_output.txt
+          sed -i 's/"/\\"/g' terraform_output
           
           # Convert Terraform output into JSON string
           terraform_output_json=$(echo "$terraform_output" | jq -c .)
