@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output Text
+        id: output
         run: |
           echo 'customer_assume_role_names = {
             "admins" = {
@@ -34,12 +35,12 @@ jobs:
             color = cc66ba
             
             EOT,
-          ]' > output.txt
-      - name: Save Output
-        run: echo ${{ steps.generate_output.outputs.value }} > output.txt
-        id: save_output   
+          ]' 
+        shell: bash
+         
       - name: Send Output to Zapier
         run: |
-          curl -X POST -H "Content-Type: application/json" -d "@output.txt" https://hooks.zapier.com/hooks/catch/17861705/3l8s0u7/
+          curl -X POST -H "Content-Type: application/json" -d '{"output": "${{ steps.output.outputs.value }}"}' https://hooks.zapier.com/hooks/catch/17861705/3l8s0u7/
+
   
           
