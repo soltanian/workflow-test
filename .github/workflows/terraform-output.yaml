@@ -9,7 +9,7 @@ jobs:
     steps: 
       - name: generate Terraform output
         run: |
-          terraform_output_json = $(<output_file.txt)
+          terraform_output_json = $(<.github/workflows/output_file.txt)
           
       - name: Create JSON Object
         id: create_json
