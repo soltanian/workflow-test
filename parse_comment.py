@@ -76,8 +76,7 @@ def main():
         "--base", "main",
         "--head", branch_name,
         "--title", f"{jira_ticket_number} - Add {project_name} configuration file",
-        "--body", f"request for jira ticket {jira_ticket_number} \n url: https://opsguru.atlassian.net/browse/{jira_ticket_number}",
-        "--reviewer", Reviewer  
+        "--body", f"request for jira ticket {jira_ticket_number} \n url: https://opsguru.atlassian.net/browse/{jira_ticket_number} \n Reviewer: {Reviewer}"
     ]
     run(pr_create_command)
 
