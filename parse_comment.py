@@ -18,6 +18,7 @@ def main():
     jira_ticket_number = parsed_data.get('Jira_ticket_number', '')
     Requester_email = parsed_data.get('Requester_email', '')
     Requester = parsed_data.get('Requester', '')
+    Reviewer = parsed_data.get('Reviewer', '')
 
     if not project_name:
         print("Project name not found in comment. Exiting...")
@@ -70,7 +71,15 @@ def main():
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
 
     # Create a pull request
-    run(["gh", "pr", "create", "--base", "main", "--head", branch_name, "--title", f"Add {project_name} configuration file - Jira: {jira_ticket_number}", "--body", f"request for jira ticket {jira_ticket_number} \n url: https://opsguru.atlassian.net/browse/{jira_ticket_number}"])
+    pr_create_command = [
+        "gh", "pr", "create",
+        "--base", "main",
+        "--head", branch_name,
+        "--title", f"{jira_ticket_number} - Add {project_name} configuration file",
+        "--body", f"request for jira ticket {jira_ticket_number} \n url: https://opsguru.atlassian.net/browse/{jira_ticket_number}",
+        "--reviewer", Reviewer  
+    ]
+    run(pr_create_command)
 
 if __name__ == "__main__":
     main()
