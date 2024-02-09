@@ -11,7 +11,7 @@ jobs:
         id: output
         run: |
           echo '{
-            "jira_ticket": "YOUR_JIRA_TICKET_NUMBER",
+            "jira_ticket": "AIP-41",
               "customer_assume_role_names": {
                 "admins": {
                   "AWS_Account_ID": "891377079859",
