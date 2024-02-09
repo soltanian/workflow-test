@@ -1,0 +1,31 @@
+name: Parse Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  parse_comment:
+    if: github.event.issue.title == 'Access Requests' && github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up environment variables
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provide GitHub token for GitHub CLI authentication
+        run: echo "env vars are set"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install pyyaml
+
+      - name: Parse Comment
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: python3 parse_comment.py "${{ github.event.comment.body }}"
+        
