@@ -29,6 +29,8 @@ def main():
         print("Jira ticket number not found in comment. Exiting...")
         return
 
+    
+    
     # Create branch name from Jira ticket number and project name
     branch_name = f"{jira_ticket_number}-{project_name.replace(' ', '-')}"
 
@@ -44,8 +46,17 @@ def main():
     run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
-    run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
-    run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
+    
+    # Check if the branch already exists
+    branch_exists = run(["git", "show-ref", "--verify", f"refs/heads/{branch_name}"], capture_output=True, text=True).stdout.strip()
+    if branch_exists:
+        print(f"Branch '{branch_name}' already exists. Switching to it...")
+        run(["git", "checkout", branch_name])
+        run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
+    else:
+        print(f"Creating and switching to branch '{branch_name}'...")
+        run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
+    
     run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
