@@ -34,4 +34,8 @@ jobs:
             color = cc66ba
             
             EOT,
-          ]'
+          ]' > output.txt
+      - name: Save Output
+        run: echo ${{ steps.generate_output.outputs.value }} > output.txt
+        id: save_output   
+          
