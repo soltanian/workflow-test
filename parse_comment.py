@@ -72,7 +72,7 @@ def main():
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
 
     ############### Find GIT USER ##############
-    def get_github_username_from_email(email):
+def get_github_username_from_email(email):
     # GitHub API endpoint for searching users
     search_users_url = "https://api.github.com/search/users"
 
