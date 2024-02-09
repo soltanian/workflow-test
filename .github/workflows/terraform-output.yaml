@@ -69,7 +69,7 @@ jobs:
           terraform_output_json=$(<terraform_output.txt)
          
           # Create JSON object
-          json_object="{ \"jira_ticket\": \"$jira_ticket\", \"terraform_output\": \"$terraform_output_json\" }"
+          json_object="{ \"jira_ticket\": \"$jira_ticket\", \"terraform_output\": $terraform_output_json }"
 
           # Print JSON object
           echo "$json_object" > output.json
