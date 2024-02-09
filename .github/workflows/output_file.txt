@@ -1,0 +1,50 @@
+  "customer_assume_role_names": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "admins": [
+          "object",
+          {
+            "AWS_Account_ID": "string",
+            "Principal": "string",
+            "role_name": "string"
+          }
+        ],
+        "readonly": [
+          "object",
+          {
+            "AWS_Account_ID": "string",
+            "Principal": "string",
+            "role_name": "string"
+          }
+        ]
+      }
+    ],
+    "value": {
+      "admins": {
+        "AWS_Account_ID": "891377079859",
+        "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Admins-Dev_9fb927072f7f0f56",
+        "role_name": "Opsguru-Account-Access-Admins-Dev"
+      },
+      "readonly": {
+        "AWS_Account_ID": "891377079859",
+        "Principal": "arn:aws:iam::730335497822:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_Abbas-Readonly-Dev_b87e2a86e56cf081",
+        "role_name": "Opsguru-Account-Access-Readonly-Dev"
+      }
+    }
+  },
+  "og_employees_aws_configs": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "[profile Abbas-Admins-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Admins-Dev\ncolor = 91518c\n",
+      "[profile Abbas-Readonly-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev\ncolor = cc66ba\n"
+    ]
+  }
