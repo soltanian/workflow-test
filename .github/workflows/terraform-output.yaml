@@ -12,6 +12,7 @@ jobs:
         run: |
           echo '{
             "jira_ticket": "YOUR_JIRA_TICKET_NUMBER",
+            "terraform_output": {
               "customer_assume_role_names": {
                 "admins": {
                   "AWS_Account_ID": "891377079859",
@@ -36,6 +37,7 @@ jobs:
                   "color": "cc66ba"
                 }
               ]
+          }
           }
           ' > output.json
           
