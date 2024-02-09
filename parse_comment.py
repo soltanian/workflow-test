@@ -62,11 +62,12 @@ def main():
     run(["git", "commit", "-m", f"Add {project_name} configuration file"])
 
     # Use the PAT as the authentication token
-    pat = os.getenv("ACCESS_TOKEN")
-    if not pat:
-        print("ACCESS_TOKEN secret not found. Exiting...")
-        return
-
+    #pat = os.getenv("ACCESS_TOKEN")
+    #if not pat:
+    #    print("ACCESS_TOKEN secret not found. Exiting...")
+    #    return
+    pat = os.getenv("GH_TOKEN")
+    
     # Push changes to the new branch
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
 
