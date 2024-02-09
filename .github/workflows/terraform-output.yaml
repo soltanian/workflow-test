@@ -29,6 +29,8 @@ jobs:
               "[[profile Abbas-Readonly-Dev]\nrole_arn = arn:aws:iam::891377079859:role/Opsguru-Account-Access-Readonly-Dev\ncolor = cc66ba\n]"
             ]
           }'
+
+          sed -i 's/"/\\"/g' terraform_output.txt
           
           # Convert Terraform output into JSON string
           terraform_output_json=$(echo "$terraform_output" | jq -c .)
