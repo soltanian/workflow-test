@@ -16,6 +16,8 @@ def main():
     # Extract project name and Jira ticket number
     project_name = parsed_data.get('project_name', '').replace(' ', '-')  # Replace spaces with hyphens
     jira_ticket_number = parsed_data.get('Jira_ticket_number', '')
+    Requester_email = parsed_data.get('Requester_email', '')
+    Requester = parsed_data.get('Requester', '')
 
     if not project_name:
         print("Project name not found in comment. Exiting...")
@@ -36,8 +38,8 @@ def main():
 
     
     # Git commands to create a new branch, add, commit, and push the file
-    run(["git", "config", "--global", "user.email", "automation@gmail.com"])
-    run(["git", "config", "--global", "user.name", "Automation"])
+    run(["git", "config", "--global", "user.email", Requester_email])
+    run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
@@ -59,15 +61,11 @@ def main():
         yaml.dump(parsed_data, file)
     
     run(["git", "add", file_path])
-    run(["git", "commit", "-m", f"Add {project_name} configuration file"])
+    run(["git", "commit", "-m", f"{jira_ticket_number} - Add {project_name} configuration file"])
 
     # Use the PAT as the authentication token
-    #pat = os.getenv("ACCESS_TOKEN")
-    #if not pat:
-    #    print("ACCESS_TOKEN secret not found. Exiting...")
-    #    return
     pat = os.getenv("GH_TOKEN")
-    
+
     # Push changes to the new branch
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
 
