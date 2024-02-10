@@ -65,7 +65,7 @@ jobs:
       - name: Create JSON Object
         id: create_json
         run: |
-          jira_ticket="AIP-40"
+          jira_ticket="AIP-39"
           terraform_output_json=$(<terraform_output.txt)
          
           # Create JSON object
