@@ -3,6 +3,8 @@ import yaml
 import re
 import os
 from subprocess import run, PIPE
+from datetime import datetime, timedelta
+
 
 def main():
     comment_body = sys.argv[1]
@@ -19,6 +21,7 @@ def main():
     Requester_email = parsed_data.get('Requester_email', '')
     Requester = parsed_data.get('Requester', '')
     Reviewer = parsed_data.get('Reviewer', '')
+    Expiry_date = parsed_data.get('expiry_date', '') 
 
     if not project_name:
         print("Project name not found in comment. Exiting...")
@@ -27,6 +30,14 @@ def main():
     if not jira_ticket_number:
         print("Jira ticket number not found in comment. Exiting...")
         return
+    
+    if not Expiry_date:
+        next_month_date = datetime.now() + timedelta(days=30)
+        formatted_date = next_month_date.strftime("%Y-%m-%d")
+        # Set Expiry_date to the formatted date
+        Expiry_date = formatted_date
+        print("There is no Expiry_date. Default is set to one month: ", Expiry_date)
+
 
     # Create branch name from Jira ticket number and project name
     branch_name = f"{jira_ticket_number}-{project_name.replace(' ', '-')}"
@@ -55,7 +66,7 @@ def main():
         
 
     # Generate file path and name
-    file_path = os.path.join(config_dir, f"{project_name}.yaml")
+    file_path = os.path.join(config_dir, f"{Expiry_date}-{project_name}.yaml")
 
     # Write parsed data to YAML file
     with open(file_path, 'w') as file:
