@@ -55,44 +55,15 @@ def main():
     run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
-
-    # Reset the working directory to the state of the last commit (Discard changes to issue_description.txt created in workflow before executing this python script)
-    run(["git", "reset", "--hard"])
-
-    # Fetch the latest changes from the main branch
-    run(["git", "fetch", "origin", "main"])
-
-    run(["git", "pull", "origin", "main"])  # Pull changes from the remote main branch
-    # Merge the latest changes from the main branch into your current branch
-    run(["git", "merge", "origin/main"])
-    
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
-    run(["git", "merge", "origin/main"])
     run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
     if conflict_check.stdout:
         print("There are conflicts that need to be resolved before proceeding. Exiting...")
-
-    # Show real conflicts
-    print("Showing real conflicts:")
-    conflicted_files_output = run(["git", "status", "--short"], capture_output=True, text=True)
-    print("Git status output:")
-    print(conflicted_files_output.stdout)
-    
-    # Filter out conflicted files
-    conflicted_files = [line.split(' ', 1)[1] for line in conflicted_files_output.stdout.strip().split('\n') if line.startswith("UU")]
-    
-    # Check if there are any conflicted files
-    if conflicted_files:
-        for file in conflicted_files:
-            print(f"Conflicts in {file}:")
-            with open(file, 'r') as conflicted_file:
-                print(conflicted_file.read())
-    else:
-        print("No conflicted files found.")
+        return
 
         
 
