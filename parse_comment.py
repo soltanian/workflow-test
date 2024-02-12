@@ -75,8 +75,11 @@ def main():
 
     # Show real conflicts
     print("Showing real conflicts:")
-    conflicted_files = run(["git", "status", "--short"], capture_output=True, text=True)
-    conflicted_files = [line.split(' ', 1)[1] for line in conflicted_files.stdout.strip().split('\n') if line.startswith("UU")]
+    conflicted_files_output = run(["git", "status", "--short"], capture_output=True, text=True)
+    print("Git status output:")
+    print(conflicted_files_output.stdout)
+    
+    conflicted_files = [line.split(' ', 1)[1] for line in conflicted_files_output.stdout.strip().split('\n') if line.startswith("UU")]
 
     # Check if there are any conflicted files
     if conflicted_files:
