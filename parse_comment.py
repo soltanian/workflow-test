@@ -77,10 +77,16 @@ def main():
     print("Showing real conflicts:")
     conflicted_files = run(["git", "diff", "--name-only", "--diff-filter=U"], capture_output=True, text=True)
     conflicted_files = conflicted_files.stdout.strip().split('\n')
-    for file in conflicted_files:
-        print(f"Conflicts in {file}:")
-        with open(file, 'r') as conflicted_file:
-            print(conflicted_file.read())
+    
+    # Check if there are any conflicted files
+    if conflicted_files:
+        for file in conflicted_files:
+            print(f"Conflicts in {file}:")
+            with open(file, 'r') as conflicted_file:
+                print(conflicted_file.read())
+    else:
+        print("No conflicted files found.")
+    
     return
 
         
