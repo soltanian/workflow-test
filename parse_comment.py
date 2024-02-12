@@ -108,6 +108,9 @@ def main():
 
     # Use the PAT as the authentication token
     pat = os.getenv("GH_TOKEN")
+    if not pat:
+        print("GitHub token not found. Exiting...")
+        return
 
     # Push changes to the new branch
     run(["git", "push", "origin", branch_name], env={"GITHUB_TOKEN": pat})
