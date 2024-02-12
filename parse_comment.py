@@ -55,7 +55,10 @@ def main():
     run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
-    
+
+    # Discard changes to issue_description.txt created in workflow before executing this python script
+    run(["git", "checkout", "--", "issue_description.txt"])
+
     # Fetch the latest changes from the main branch
     run(["git", "fetch", "origin", "main"])
 
