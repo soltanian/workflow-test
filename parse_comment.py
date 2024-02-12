@@ -55,15 +55,22 @@ def main():
     run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
+    # Reset the working directory to the state of the last commit
+    run(["git", "reset", "--hard"])
+
+    # Checkout to the main branch and get the latest changes
+    run(["git", "checkout", "main"])
+    run(["git", "pull", "origin", "main"])
+    
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
     run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
-    conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
-    if conflict_check.stdout:
-        print("There are conflicts that need to be resolved before proceeding. Exiting...")
-        return
+    #conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    #if conflict_check.stdout:
+    #    print("There are conflicts that need to be resolved before proceeding. Exiting...")
+    #    return
 
         
 
