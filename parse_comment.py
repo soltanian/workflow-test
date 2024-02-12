@@ -15,12 +15,6 @@ def main():
 
     # Parse the modified comment body as YAML content
     parsed_data = yaml.safe_load(comment_body.strip())
-    
-    #comment_body = sys.argv[1]
-    # Remove all occurrences of '---'
-    #comment_body = re.sub(r'---', '', comment_body)
-    # Parse the modified comment body as YAML content
-    #parsed_data = yaml.safe_load(comment_body.strip())
 
     # Extract project name and Jira ticket number
     project_name = parsed_data.get('project_name', '').replace(' ', '-')  # Replace spaces with hyphens
@@ -61,9 +55,18 @@ def main():
     run(["git", "config", "--global", "user.name", Requester])
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
+    
+    # Fetch the latest changes from the main branch
+    run(["git", "fetch", "origin", "main"])
+
+    run(["git", "pull", "origin", "main"])  # Pull changes from the remote main branch
+    # Merge the latest changes from the main branch into your current branch
+    run(["git", "merge", "origin/main"])
+    
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
-    run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
+    run(["git", "merge", "origin/main"])
+    #run(["git", "pull", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
