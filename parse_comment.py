@@ -60,10 +60,10 @@ def main():
     run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
-    #conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
-    #if conflict_check.stdout:
-    #    print("There are conflicts that need to be resolved before proceeding. Exiting...")
-    #    return
+    conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    if conflict_check.stdout:
+        print("There are conflicts that need to be resolved before proceeding. Exiting...")
+        return
 
         
 
