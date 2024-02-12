@@ -25,5 +25,7 @@ jobs:
             fs.writeFileSync('issue_description.txt', response.data.body);
 
       - name: Run Python script
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           python parse_comment.py < issue_description.txt
