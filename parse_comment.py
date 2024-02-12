@@ -66,7 +66,7 @@ def main():
     run(["git", "checkout", "-b", branch_name])  # Create and checkout new branch
     run(["git", "pull", "origin", branch_name])  # pull changes if branch exist
     run(["git", "merge", "origin/main"])
-    #run(["git", "pull", "origin", "main"])  # Pull changes from the remote main branch
+    run(["git", "pull", "--rebase", "origin", "main"])  # Pull changes from the remote main branch
 
     # Check if there are any conflicts
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
