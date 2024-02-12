@@ -56,8 +56,8 @@ def main():
     # Enable pull rebase globally
     run(["git", "config", "--global", "pull.rebase", "true"], stdout=PIPE, stderr=PIPE)
 
-    # Discard changes to issue_description.txt created in workflow before executing this python script
-    run(["git", "checkout", "--", "issue_description.txt"])
+    # Reset the working directory to the state of the last commit (Discard changes to issue_description.txt created in workflow before executing this python script)
+    run(["git", "reset", "--hard"])
 
     # Fetch the latest changes from the main branch
     run(["git", "fetch", "origin", "main"])
