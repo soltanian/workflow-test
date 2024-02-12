@@ -82,8 +82,9 @@ def main():
     print("Git status output:")
     print(conflicted_files_output.stdout)
     
+    # Filter out conflicted files
     conflicted_files = [line.split(' ', 1)[1] for line in conflicted_files_output.stdout.strip().split('\n') if line.startswith("UU")]
-
+    
     # Check if there are any conflicted files
     if conflicted_files:
         for file in conflicted_files:
@@ -92,8 +93,6 @@ def main():
                 print(conflicted_file.read())
     else:
         print("No conflicted files found.")
-
-    return
 
         
 
