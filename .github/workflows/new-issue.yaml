@@ -1,0 +1,29 @@
+name: Process New Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  process-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get issue description
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const response = await github.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            const issueDescription = response.data.body;
+            console.log(issueDescription);
+
+      - name: Run Python script
+        run: |
+          python parse_comment.py "${{ steps.get-issue-description.outputs.issue-description }}"
