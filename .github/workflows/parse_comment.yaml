@@ -6,7 +6,7 @@ on:
 
 jobs:
   parse_comment:
-    if: github.event_name == 'issue_comment'
+    if: github.event_name == 'issues' || (github.event_name == 'issue_comment' && github.event.action == 'created')
     runs-on: ubuntu-latest
 
     steps:
