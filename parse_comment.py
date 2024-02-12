@@ -71,7 +71,7 @@ def main():
     # Check if there are any conflicts
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
     if conflict_check.stdout:
-    print("There are conflicts that need to be resolved before proceeding. Exiting...")
+        print("There are conflicts that need to be resolved before proceeding. Exiting...")
 
     # Show real conflicts
     print("Showing real conflicts:")
