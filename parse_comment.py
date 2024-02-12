@@ -71,7 +71,7 @@ def main():
     # Check if there are any conflicts
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
     if conflict_check.stdout:
-        print("There are conflicts that need to be resolved before proceeding. Exiting...")
+    print("There are conflicts that need to be resolved before proceeding. Exiting...")
 
     # Show real conflicts
     print("Showing real conflicts:")
@@ -79,7 +79,8 @@ def main():
     conflicted_files = conflicted_files.stdout.strip().split('\n')
     for file in conflicted_files:
         print(f"Conflicts in {file}:")
-        run(["git", "diff", file])
+        with open(file, 'r') as conflicted_file:
+            print(conflicted_file.read())
     return
 
         
