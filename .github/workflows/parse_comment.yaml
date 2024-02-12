@@ -2,7 +2,7 @@ name: Parse Comment
 
 on:
   issues:
-    types: [opened]
+    types: [SHOULDBEopened]
 
 jobs:
   parse_comment:
