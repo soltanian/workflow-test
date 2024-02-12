@@ -72,7 +72,16 @@ def main():
     conflict_check = run(["git", "status", "--porcelain"], capture_output=True, text=True)
     if conflict_check.stdout:
         print("There are conflicts that need to be resolved before proceeding. Exiting...")
-        return
+
+    # Show real conflicts
+    print("Showing real conflicts:")
+    conflicted_files = run(["git", "diff", "--name-only", "--diff-filter=U"], capture_output=True, text=True)
+    conflicted_files = conflicted_files.stdout.strip().split('\n')
+    for file in conflicted_files:
+        print(f"Conflicts in {file}:")
+        run(["git", "diff", file])
+    return
+
         
 
     # Generate file path and name
