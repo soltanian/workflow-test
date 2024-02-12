@@ -6,7 +6,7 @@ on:
 
 jobs:
   parse_comment:
-    if: github.event_name == 'issues'
+    if: github.event.action == 'created'
     runs-on: ubuntu-latest
 
     steps:
