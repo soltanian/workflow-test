@@ -7,13 +7,20 @@ from datetime import datetime, timedelta
 
 
 def main():
-    comment_body = sys.argv[1]
+    # Read issue description from standard input
+    issue_description = sys.stdin.read()
 
     # Remove all occurrences of '---'
-    comment_body = re.sub(r'---', '', comment_body)
+    comment_body = re.sub(r'---', '', issue_description)
 
     # Parse the modified comment body as YAML content
     parsed_data = yaml.safe_load(comment_body.strip())
+    
+    #comment_body = sys.argv[1]
+    # Remove all occurrences of '---'
+    #comment_body = re.sub(r'---', '', comment_body)
+    # Parse the modified comment body as YAML content
+    #parsed_data = yaml.safe_load(comment_body.strip())
 
     # Extract project name and Jira ticket number
     project_name = parsed_data.get('project_name', '').replace(' ', '-')  # Replace spaces with hyphens
