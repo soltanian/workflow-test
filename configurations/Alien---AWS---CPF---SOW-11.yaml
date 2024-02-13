@@ -10,7 +10,7 @@ groups:
   group_users:
   - employee1@opsguru.io
   - employee2@opsguru.io
-- customer_account_id: '22222222200'
+- customer_account_id: '222222222'
   group_description: Group created by terraform to provide READONLY access to Prod
     environment of the customer Alien
   group_name: Readonly-Prod
