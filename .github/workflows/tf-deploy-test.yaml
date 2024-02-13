@@ -1,44 +1,23 @@
-name: "Terraform Deploy"
-
+name: CI
 on:
   push:
-    branches:
-      - main
     paths:
-      - "configurations/*"
-
-permissions:
-  id-token: write # This is required for aws oidc connection
-  contents: read # This is required for actions/checkout
-
-env:
-  TF_LOG: INFO
-  #AWS_REGION: ${{ secrets.AWS_REGION }}
+      - 'configurations/*'
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    #env:
-      #TF_VAR_okta_tenant_name: ${{ secrets.OKTA_TENANT_NAME }}
-      #TF_VAR_okta_api_token: ${{ secrets.OKTA_API_TOKEN }}
-      #OKTA_ORG_NAME: ${{ secrets.OKTA_ORG_NAME }}
-      #OKTA_API_CLIENT_ID: ${{ secrets.OKTA_API_CLIENT_ID }}
-      #OKTA_API_PRIVATE_KEY: ${{ secrets.OKTA_API_PRIVATE_KEY }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: .
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
-
-      - name: Extract filename
+      - name: Get changed files
+        id: getfile
         run: |
-          FILE_PATH=$(git diff --name-only HEAD^..HEAD | grep "^configurations/" | head -n 1)
-          if [ -z "$FILE_PATH" ]; then
-            echo "Error: No file path detected."
-            exit 1
-          fi
-          FILE_NAME=$(basename "$FILE_PATH")
-          echo "Changed file name: $FILE_NAME"
+          echo "::set-output name=files::$(git diff --name-only HEAD^ HEAD)"
+          
+      - name: Show changed files
+        run: |
+          echo "Changed file(s): ${{ steps.getfile.outputs.files }}"
