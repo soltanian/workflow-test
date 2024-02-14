@@ -82,4 +82,4 @@ jobs:
       - name: Send Output to Zapier
         if: always()
         run: |
-          curl -X POST -H "Content-Type: application/json" -d @output.json https://hooks.zapier.com/hooks/catch/17861705/3l8s0u7/
+          curl -X POST -H "Content-Type: application/json" -d @output.json https://hooks.zapier.com/hooks/catch/....../....
