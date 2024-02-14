@@ -8,4 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print repository variable
-        run: echo ${{ env.AWS_REGION }}
+        run: |
+          echo "using env: ${{ env.AWS_REGION }}"
+          echo "using secrets: ${{ secrets.AWS_REGION }}"
