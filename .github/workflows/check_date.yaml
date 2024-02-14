@@ -22,8 +22,8 @@ jobs:
             if [[ "$date_in_file" < "$current_date" ]]; then
               echo "Date has passed for file: $filename"
               echo "Extract parameters from the Config file to inform Requester"
-              requester_email=$(grep 'Requester_email' "$file" | cut -d'=' -f2 | tr -d '"')
-              requester=$(grep 'Requester' "$file" | cut -d'=' -f2 | tr -d '"')
+              requester_email=$(grep '^Requester_email=' "$file" | cut -d'=' -f2 | tr -d '"')
+              requester=$(grep '^Requester=' "$file" | cut -d'=' -f2 | tr -d '"')
               echo "fetched Requester : $requester"
               json_object="{ \"Requester_email\": \"$requester_email\", \"Requester\": \"$requester\"}"
               echo "created json is:"
