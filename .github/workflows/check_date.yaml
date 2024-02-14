@@ -29,6 +29,6 @@ jobs:
             echo "File: $file"
             requester_email=$(grep 'Requester_email' "$file" | cut -d'=' -f2)
             requester=$(grep 'Requester' "$file" | cut -d'=' -f2)
-            echo "Requester Email: $requester_email"
-            echo "Requester: $requester"
+            echo "The Requester Email is: $requester_email"
+            echo "The Requester is: $requester"
           done    
