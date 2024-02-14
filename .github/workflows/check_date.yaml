@@ -1,8 +1,9 @@
 name: Check Configuration Files
 on:
-  schedule:
+  workflow_dispatch:
+  #schedule:
     #- cron: '0 0 * * *' # This will run the workflow every day at midnight
-    - cron: '*/2 * * * *' # This will run the workflow every minute
+    #- cron: '*/2 * * * *' # This will run the workflow every minute
 
 jobs:
   check_files:
