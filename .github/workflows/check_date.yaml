@@ -27,8 +27,9 @@ jobs:
         run: |
           for file in configurations/*; do
             echo "File: $file"
-            requester_email=$(grep 'requester_email' "$file" | cut -d'=' -f2 | tr -d '[:space:]')
-            requester=$(grep 'requester' "$file" | cut -d'=' -f2 | tr -d '[:space:]')
+            
+            requester_email=$(grep 'requester_email' "$file" | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            requester=$(grep 'requester' "$file" | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
             echo "Requester Email: $requester_email"
             echo "Requester: $requester"
           done   
