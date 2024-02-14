@@ -1,4 +1,4 @@
-name: Generate Text Output
+name: env var test
 
 on:
   workflow_dispatch:
