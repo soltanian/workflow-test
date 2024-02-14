@@ -28,7 +28,7 @@ jobs:
               customer_name=$(grep '^customer_name=' "$file" | cut -d'=' -f2 | tr -d '"')
               expiry_date=$(grep '^expiry_date=' "$file" | cut -d'=' -f2 | tr -d '"')
 
-              json_object="{ \"Requester_email\": \"$requester_email\", \"Requester\": \"$requester\", \"project_name\": \"$project_name\", \"customer_name\": \"$customer_name\", \"expiry_date\": \"$expiry_date\"}"
+              json_object="{ \"Requester_email\": \"$requester_email\", \"Requester\": \"$requester\", \"project_name\": \"$project_name\", \"customer_name\": \"$customer_name\", \"expiry_date\": \"$expiry_date\", \"file_name\": \"$file\"}"
               echo "created json is:"
               echo "$json_object"
               curl -X POST -H "Content-Type: application/json" -d "$json_object" https://hooks.zapier.com/hooks/catch/17861705/3ln2mh1/
