@@ -28,8 +28,8 @@ jobs:
           for file in configurations/*; do
             echo "File: $file"
             
-            requester_email=$(grep 'Requester_email' "$file" | cut -d'=' -f2)
-            requester=$(grep 'Requester' "$file" | cut -d'=' -f2)
+            requester_email=$(grep 'Requester_email' "$file" | cut -d'=' -f2 | tr -d '"')
+            requester=$(grep 'Requester' "$file" | cut -d'=' -f2 | tr -d '"')
             echo "Requester Email: $requester_email"
             echo "Requester: $requester"
           done   
