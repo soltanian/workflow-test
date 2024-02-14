@@ -1,20 +1,27 @@
-Jira_ticket_number: AIP-53
-Requester: Abbas Soltanian
-Requester_email: abbas.soltanian@opsguru.io
-customer_name: Alien
-groups:
-- customer_account_id: '1111111111'
-  group_description: Group created by terraform to provide READONLY access to Dev
-    environment of the customer Alien
-  group_name: Readonly-Dev
-  group_users:
-  - employee1@opsguru.io
-  - employee2@opsguru.io
-- customer_account_id: '222222222'
-  group_description: Group created by terraform to provide READONLY access to Prod
-    environment of the customer Alien
-  group_name: Readonly-Prod
-  group_users:
-  - employee1@opsguru.io
-  - employee2@opsguru.io
-project_name: Alien - AWS - CPF - SOW 11
+Jira_ticket_number= "AIP-53"
+Requester= "Abbas Soltanian"
+Requester_email= "abbas.soltanian@opsguru.io"
+customer_name= "Alien"
+project_name= "Alien - AWS - CPF - SOW 1"
+expiry_date= "2024-04-15"
+groups= {
+  group1 = {
+    group_name          = "Readonly-Prod"
+    group_description   = "Group created to provide READONLY access to Prod environment of the customer Alien"
+    customer_account_id = "891377079859"
+    group_users = [
+      "ivapirovschi@opsguru.io@opsguru.io",
+      "abbas.soltanian@opsguru.io"
+    ]
+  },
+  group2 = {
+    group_name          = "Readonly-Dev"
+    group_description   = "Group created to provide READONLY access to Dev environment of the customer Alien"
+    customer_account_id = "891377079859"
+    group_users = [
+      "ivapirovschi@opsguru.io@opsguru.io",
+      "abbas.soltanian@opsguru.io",
+      "salman.hyder@opsguru.io"
+    ]
+  }
+}
