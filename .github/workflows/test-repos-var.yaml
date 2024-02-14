@@ -3,9 +3,6 @@ name: env var test
 on:
   workflow_dispatch:
 
-env:
-  AWS_REGION_ENV: ${{ vars.AWS_REGION }}  
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,4 +11,4 @@ jobs:
         run: |
           echo "using env: ${{ env.AWS_REGION }}"
           echo "using secrets: ${{ secrets.AWS_REGION }}"
-          echo "using vars: ${{ env.AWS_REGION_ENV }}"
+          echo "using vars: ${{ vars.AWS_REGION }}"
