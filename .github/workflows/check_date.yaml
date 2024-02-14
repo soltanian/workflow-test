@@ -21,15 +21,10 @@ jobs:
             current_date=$(date +'%Y-%m-%d')
             if [[ "$date_in_file" < "$current_date" ]]; then
               echo "Date has passed for file: $filename"
+              echo "Extract parameters from the Config file to inform Requester"
+              requester_email=$(grep 'Requester_email' "$file" | cut -d'=' -f2 | tr -d '"')
+              requester=$(grep 'Requester' "$file" | cut -d'=' -f2 | tr -d '"')
+              json_object="{ \"Requester_email\": \"$requester_email\", \"Requester\": \"$requester\" }"
+              curl -X POST -H "Content-Type: application/json" -d $json_object https://hooks.zapier.com/hooks/catch/17861705/3ln2mh1/
             fi
-          done
-      - name: Extract parameters from Config file
-        run: |
-          for file in configurations/*; do
-            echo "File: $file"
-            
-            requester_email=$(grep 'Requester_email' "$file" | cut -d'=' -f2 | tr -d '"')
-            requester=$(grep 'Requester' "$file" | cut -d'=' -f2 | tr -d '"')
-            echo "Requester Email: $requester_email"
-            echo "Requester: $requester"
-          done   
+          done 
