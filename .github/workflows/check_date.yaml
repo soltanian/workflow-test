@@ -1,0 +1,24 @@
+name: Check Configuration Files
+on:
+  schedule:
+    #- cron: '0 0 * * *' # This will run the workflow every day at midnight
+    - cron: '* * * * *' # This will run the workflow every minute
+
+jobs:
+  check_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check configuration files
+        run: |
+          echo "Checking configuration files..."
+          for file in configurations/*; do
+            filename=$(basename "$file")
+            date_in_file="${filename%%.*}"
+            current_date=$(date +'%Y-%m-%d')
+            if [[ "$date_in_file" < "$current_date" ]]; then
+              echo "Date has passed for file: $filename"
+            fi
+          done
