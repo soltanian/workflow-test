@@ -1,0 +1,11 @@
+name: Generate Text Output
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print repository variable
+        run: echo ${{ env.AWS_REGION }}
